@@ -18,4 +18,8 @@ jobs:
               with:
                 build: npm install
                 browser: chrome
+                spec: |
+                  cypress/e2e/contalistList.cy.js
+                  cypress/e2e/registrationForm.cy.js
+                  cypress/e2e/saucedemo.cy.js
             - run: echo "This job's status is ${{ job.status }}."
