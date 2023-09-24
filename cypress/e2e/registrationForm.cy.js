@@ -4,12 +4,6 @@ import { generateData } from "../support/dataGenerator"
 
 const data = generateData()
 
-const firstName = data[0];
-const lastName = data[1];
-const emailAddress = data[2];
-const password = data[3];
-const telephoneNumber = data[4];
-
 describe('Open Website', () => {
     beforeEach(() => {
       // Cypress starts out with a blank slate for each test
@@ -27,13 +21,13 @@ describe('Open Website', () => {
 
 
         cy.get('camelot-input[type="email"]').click()
-        .type(emailAddress)
+        .type(data.emailAddress)
 
         cy.get('input[name="password"]').click()
-        .type(password)
+        .type(data.password)
 
         cy.get('input[name="mobilePhone"]').click()
-        .type(telephoneNumber)
+        .type(data.telephoneNumber)
 
         
     })
