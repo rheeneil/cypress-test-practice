@@ -4,10 +4,16 @@ import { faker, fakerEN_GB } from '@faker-js/faker';
 export function generateData() {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
-    const dateOfBirth = faker.date.between({from: '1950/01/01', to: '2005/01/01'}).strf('%d/%m/%Y')
+    let fullDOB = faker.date.birthdate({min: 18, max: 75, mode: 'age'});
+    fullDOB = String(fullDOB);
+    let date = fullDOB.split("T")[0];
+    let day = date.split("-")[2];
+    let month = date.split("-")[1];
+    let year = date.split("-")[0];
+    const dob = day + '/' + month + '/' + year;
     const emailAddress = faker.internet.email();
     const password = "password" + (Math.floor(Math.random() * 2));
-    const address = [fakerEN_GB.location.streetAddress, fakerEN_GB.location.street]
+    const address = [fakerEN_GB.location.streetAddress, fakerEN_GB.location.street];
     const telephoneNumber = faker.phone.number('176########');
     const randomPin = Math.floor(Math.random() * 9000 + 1000);
     const postCode = fakerEN_GB.location.zipCode();
@@ -15,7 +21,7 @@ export function generateData() {
     const data = {
         'firstName': firstName,
         'lastName': lastName,
-        'dateOfBirth': dateOfBirth,
+        'dateOfBirth': dob,
         'emailAddress': emailAddress,
         'password': password,
         'address': address,
@@ -26,7 +32,7 @@ export function generateData() {
 
     console.log('First Name: ' + firstName + ' ' + typeof firstName);
     console.log('Last Name: ' + lastName + ' ' + typeof lastName);
-    console.log('Date of Birth: ' + dateOfBirth)
+    console.log('Date of Birth: ' + dob)
     console.log('Email Address: ' + emailAddress + ' ' + typeof emailAddress);
     console.log('password: ' + password + ' ' + typeof password);
     console.log('Address: ' + address)

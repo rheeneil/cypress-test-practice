@@ -6,6 +6,7 @@
   "scripts": {
     "cy:run": "cypress run",
     "cy:chrome": "cypress run --browser chrome",
-    "cy:edge": "cypress run --browser edge"
+    "cy:edge": "cypress run --browser edge",
+    "cy:contact-list:chrome": "cypress run -s 'cypress/e2e/contactList.cy.js' --browser chrome --headless"
   }
 }

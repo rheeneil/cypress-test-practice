@@ -1,0 +1,25 @@
+name: Cypress Test
+
+on: push
+
+jobs:
+    cypress-run:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+            - run: echo "The workflow is now ready to test your code on the runner."
+            # Install NPM dependencies, cache them correctly
+            # and run all Cypress tests
+            - run: echo "Cypress test is about to begin."
+            - name: Cypress run - chrome
+              uses: cypress-io/github-action@v6
+              with:
+                build: npm install
+                browser: chrome
+                spec: |
+                  cypress/e2e/contactList.cy.js
+                  cypress/e2e/registrationForm.cy.js
+                  cypress/e2e/saucedemo.cy.js
+            - run: echo "This job's status is ${{ job.status }}."
