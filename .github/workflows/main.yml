@@ -14,7 +14,7 @@ jobs:
               uses: cypress-io/github-action@v6
               with:
                 build: npm install
-            - run: npm ci
-            - run: npm npm cy:contact-list:chrome
+            # - run: npm ci
+            # - run: npm npm cy:contact-list:chrome
 
 
