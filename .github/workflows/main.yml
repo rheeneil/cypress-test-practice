@@ -8,13 +8,15 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+            - run: echo "The workflow is now ready to test your code on the runner."
             # Install NPM dependencies, cache them correctly
             # and run all Cypress tests
+            - run: echo "Cypress test is about to begin."
             - name: Cypress run - chrome
               uses: cypress-io/github-action@v6
               with:
                 build: npm install
-            # - run: npm ci
-            # - run: npm npm cy:contact-list:chrome
-
-
+                start: npm start
+                browser: chrome
+            - run: echo "This job's status is ${{ job.status }}."
