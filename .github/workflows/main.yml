@@ -13,6 +13,8 @@ jobs:
             - name: Cypress run - chrome
               uses: cypress-io/github-action@v6
               with:
-                build: npm run build
-                start: npm start
-                browser: chrome
+                build: npm install
+            - run: npm ci
+            - run: npm npm cy:contact-list:chrome
+
+
