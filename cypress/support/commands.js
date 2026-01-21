@@ -27,3 +27,22 @@
 import { generateData } from "./dataGenerator";
 
 generateData();
+
+Cypress.Commands.add("login", (username, password) => {
+  cy.get("#user-name").click().type(username);
+  cy.get("#password").click().type(password);
+  cy.get("#login-button").click();
+});
+
+Cypress.Commands.add("waitForElement", (element, timeout = 5000, text) => {
+  cy.get(element, { timeout }).should("be.visible");
+  text ? cy.get(element).should("have.text", text) : null;
+});
+
+Cypress.Commands.add("clickButton", (button) => {
+  cy.get(button).click();
+});
+
+Cypress.Commands.add("waitForURL", (urlPart, timeout = 5000) => {
+  cy.url({ timeout }).should("include", urlPart);
+});
