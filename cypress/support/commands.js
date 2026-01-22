@@ -28,11 +28,17 @@ import { generateData } from "./dataGenerator";
 
 generateData();
 
-Cypress.Commands.add("login", (username, password) => {
-  cy.get("#user-name").click().type(username);
-  cy.get("#password").click().type(password);
-  cy.get("#login-button").click();
-});
+Cypress.Commands.add(
+  "login",
+  (usernameField, username, passwordField, password, loginButton) => {
+    cy.get(usernameField).should("be.visible");
+    cy.get(usernameField).click().type(username);
+    cy.get(passwordField).should("be.visible");
+    cy.get(passwordField).click().type(password);
+    cy.get(loginButton).should("be.visible");
+    cy.get(loginButton).click();
+  },
+);
 
 Cypress.Commands.add("waitForElement", (element, timeout = 5000, text) => {
   cy.get(element, { timeout }).should("be.visible");
@@ -40,6 +46,7 @@ Cypress.Commands.add("waitForElement", (element, timeout = 5000, text) => {
 });
 
 Cypress.Commands.add("clickButton", (button) => {
+  cy.get(button).should("be.visible");
   cy.get(button).click();
 });
 
@@ -48,5 +55,21 @@ Cypress.Commands.add("waitForURL", (urlPart, timeout = 5000) => {
 });
 
 Cypress.Commands.add("fillInput", (input, value) => {
+  cy.get(input).should("be.visible");
   cy.get(input).click().type(value);
+});
+
+Cypress.Commands.add("selectOption", (select, option) => {
+  cy.get(select).should("be.visible");
+  cy.get(select).select(option);
+});
+
+Cypress.Commands.add("checkCheckbox", (checkbox) => {
+  cy.get(checkbox).should("be.visible");
+  cy.get(checkbox).check();
+});
+
+Cypress.Commands.add("uncheckCheckbox", (checkbox) => {
+  cy.get(checkbox).should("be.visible");
+  cy.get(checkbox).uncheck();
 });
