@@ -83,7 +83,7 @@ describe("Forms Pages: Login Scenarios", () => {
   });
 
   context("Registration Scenarios", () => {
-    it("Opens Forms Page: Registration - Success", () => {
+    it("Registration - Success", () => {
       cy.clickButton("#forms");
       cy.waitForElement("#register", 5000, "Register");
       cy.clickButton("#register");
@@ -100,6 +100,19 @@ describe("Forms Pages: Login Scenarios", () => {
       cy.waitForElement(
         "#message",
         5000,
+        "The account has been successfully created!",
+      );
+    });
+
+    it("Registration - Unsuccessful", () => {
+      cy.clickButton("#forms");
+      cy.waitForElement("#register", 5000, "Register");
+      cy.clickButton("#register");
+      cy.waitForURL("/register.html");
+      cy.waitForElement("#registerForm");
+      cy.clickButton("#registerBtn");
+      cy.get("#message").should(
+        "not.have.text",
         "The account has been successfully created!",
       );
     });
