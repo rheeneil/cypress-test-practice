@@ -24,10 +24,6 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import { generateData } from "./dataGenerator";
-
-generateData();
-
 Cypress.Commands.add(
   "login",
   (usernameField, username, passwordField, password, loginButton) => {

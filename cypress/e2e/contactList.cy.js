@@ -1,100 +1,66 @@
-import { generateData } from "../support/dataGenerator"
+import { generateData } from "../support/dataGenerator";
 
 /// <reference types="cypress" />
 
 const data = generateData();
 
-describe('Contact List App', () => {
-    beforeEach(() => {
-        cy.visit('https://thinking-tester-contact-list.herokuapp.com/');
-        cy.get('body > h1')
-        .should('be.visible', 'Contact List App')
-    })
+describe("Contact List App", () => {
+  beforeEach(() => {
+    cy.visit("https://thinking-tester-contact-list.herokuapp.com/");
+    cy.get("body > h1").should("be.visible", "Contact List App");
+  });
 
-    it('Sign up', () => {
-        cy.get('#signup')
-        .click()
+  it("Sign up", () => {
+    cy.clickButton("#signup");
 
-        cy.url()
-        .should('include','/addUser')
+    cy.waitForURL("/addUser");
 
-        cy.get('#firstName')
-        .should('be.visible')
-        .click()
-        .type(data.firstName)
+    cy.fillInput("#firstName", data.firstName);
 
-        cy.get('#lastName')
-        .should('be.visible')
-        .click()
-        .type(data.lastName)
+    cy.fillInput("#lastName", data.lastName);
 
-        cy.get('#email')
-        .should('be.visible')
-        .click()
-        .type(data.emailAddress)
+    cy.fillInput("#email", data.emailAddress);
 
-        cy.get('#password')
-        .should('be.visible')
-        .click()
-        .type(data.password)
+    cy.fillInput("#password", data.password);
 
-        cy.get('#submit')
-        .should('be.visible')
-        .click()
+    cy.clickButton("#submit");
 
-        cy.url()
-        .should('include', '/contactList')
+    cy.waitForURL("/contactList");
 
-        cy.get('h1')
-        .should('be.visible', 'Contact List')
+    cy.waitForElement("h1", 5000, "Contact List");
+  });
 
-    })
+  it("Sign in and sign out", () => {
+    cy.login(
+      "#email",
+      data.emailAddress,
+      "#password",
+      data.password,
+      "#submit",
+    );
 
-    it('Sign in and sign out', () => {
+    cy.waitForURL("/contactList");
 
-        cy.get('#email')
-        .click()
-        .type(data.emailAddress)
+    cy.waitForElement("h1", 5000, "Contact List");
 
-        cy.get('#password')
-        .click()
-        .type(data.password)
+    cy.clickButton("#logout");
 
-        cy.get('#submit')
-        .click()
+    cy.waitForElement("body > h1", 5000, "Contact List App");
+  });
 
-        cy.url()
-        .should('include', '/contactList')
+  it("Add contact", () => {
+    cy.login(
+      "#email",
+      data.emailAddress,
+      "#password",
+      data.password,
+      "#submit",
+    );
 
-        cy.get('h1')
-        .should('be.visible', 'Contact List')
+    cy.waitForURL("/contactList");
 
-        cy.get('#logout')
-        .click()
+    cy.waitForElement("h1", 5000, "Contact List");
 
-        cy.get('body > h1')
-        .should('be.visible', 'Contact List App')
-    })
-
-    it('Add contact', () => {
-        cy.get('#email')
-        .click()
-        .type(data.emailAddress)
-
-        cy.get('#password')
-        .click()
-        .type(data.password)
-
-        cy.get('#submit')
-        .click()
-
-        cy.url()
-        .should('include', '/contactList')
-
-        cy.get('h1')
-        .should('be.visible', 'Contact List')
-
-        cy.get('#add-contact')
-        .click()
-    })
-})
+    cy.clickButton("#add-contact");
+  });
+});
