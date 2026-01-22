@@ -14,7 +14,13 @@ describe("Open Website", () => {
   });
 
   it("sign in - standard user", () => {
-    cy.login("standard_user", "secret_sauce");
+    cy.login(
+      "#user-name",
+      "standard_user",
+      "#password",
+      "secret_sauce",
+      "#login-button",
+    );
 
     cy.url().should("include", "/inventory.html");
 
@@ -22,13 +28,25 @@ describe("Open Website", () => {
   });
 
   it("sign in - locked out user", () => {
-    cy.login("locked_out_user", "secret_sauce");
+    cy.login(
+      "#user-name",
+      "locked_out_user",
+      "#password",
+      "secret_sauce",
+      "#login-button",
+    );
 
     cy.waitForElement('h3[data-test="error"]');
   });
 
   it("end to end - buying item", () => {
-    cy.login("standard_user", "secret_sauce");
+    cy.login(
+      "#user-name",
+      "standard_user",
+      "#password",
+      "secret_sauce",
+      "#login-button",
+    );
 
     cy.waitForElement("#inventory_container");
 

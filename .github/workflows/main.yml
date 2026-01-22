@@ -21,4 +21,5 @@ jobs:
           spec: |
             cypress/e2e/contactList.cy.js
             cypress/e2e/saucedemo.cy.js
+            cypress/e2e/QAPractice.cy.js
       - run: echo "This job's status is ${{ job.status }}."
