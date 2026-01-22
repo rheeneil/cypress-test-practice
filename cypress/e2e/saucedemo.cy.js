@@ -14,17 +14,6 @@ describe("Open Website", () => {
   });
 
   it("sign in - standard user", () => {
-    // cy.get('#user-name')
-    // .click()
-    // .type('standard_user')
-
-    // cy.get('#password')
-    // .click()
-    // .type('secret_sauce')
-
-    // cy.get('#login-button')
-    // .click()
-
     cy.login("standard_user", "secret_sauce");
 
     cy.url().should("include", "/inventory.html");
@@ -33,83 +22,48 @@ describe("Open Website", () => {
   });
 
   it("sign in - locked out user", () => {
-    // cy.get('#user-name')
-    // .click()
-    // .type('locked_out_user')
-
-    // cy.get('#password')
-    // .click()
-    // .type('secret_sauce')
-
-    // cy.get('#login-button')
-    // .click()
-
     cy.login("locked_out_user", "secret_sauce");
 
-    cy.get('h3[data-test="error"]').should("be.visible");
+    cy.waitForElement('h3[data-test="error"]');
   });
 
   it("end to end - buying item", () => {
-    // cy.get('#user-name')
-    //     .click()
-    //     .type('standard_user')
-
-    //     cy.get('#password')
-    //     .click()
-    //     .type('secret_sauce')
-
-    //     cy.get('#login-button')
-    //     .click()
-
     cy.login("standard_user", "secret_sauce");
 
-    // cy.get("#inventory_container").should("be.visible");
     cy.waitForElement("#inventory_container");
 
-    // cy.get("#add-to-cart-sauce-labs-backpack").click();
     cy.clickButton("#add-to-cart-sauce-labs-backpack");
 
-    // cy.get(".shopping_cart_badge").should("be.visible", "1");
     cy.waitForElement(".shopping_cart_badge");
 
-    // cy.get("#shopping_cart_container").click();
     cy.clickButton("#shopping_cart_container");
 
-    // cy.get(".title").should("be.visible", "Your Cart");
     cy.waitForURL("/cart.html");
     cy.waitForElement(".title", 5000, "Your Cart");
 
-    // cy.get("#checkout").click();
     cy.clickButton("#checkout");
 
-    // cy.url().should("include", "/checkout-step-one.html");
-
-    // cy.get(".title").should("be.visible", "Checkout: Your Information");
     cy.waitForURL("/checkout-step-one.html");
     cy.waitForElement(".title", 5000, "Checkout: Your Information");
 
-    // cy.get(".checkout_info").should("be.visible");
-
     cy.waitForElement(".checkout_info");
 
-    cy.get("#first-name").click().type(data.firstName);
+    cy.fillInput("#first-name", data.firstName);
+    cy.fillInput("#last-name", data.lastName);
+    cy.fillInput("#postal-code", data.zipCode);
 
-    cy.get("#last-name").click().type(data.lastName);
+    cy.clickButton("#continue");
 
-    cy.get("#postal-code").click().type(data.zipCode);
+    cy.waitForURL("/checkout-step-two.html");
 
-    cy.get("#continue").click();
+    cy.waitForElement(".title", 5000, "Checkout: Overview");
 
-    cy.url().should("include", "/checkout-step-two.html");
+    cy.clickButton("#finish");
 
-    cy.get(".title").should("be.visible", "Checkout: Overview");
+    cy.waitForURL("/checkout-complete.html");
 
-    cy.get("#finish").click();
+    cy.waitForElement(".title", 5000, "Checkout: Complete!");
 
-    cy.url().should("include", "/checkout-complete.html");
-
-    cy.get(".title").should("be.visible", "Checkout: Complete!");
-
-    cy.get("#checkout_complete_container").should("be.visible");
+    cy.waitForElement("#checkout_complete_container");
   });
 });

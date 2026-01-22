@@ -46,3 +46,7 @@ Cypress.Commands.add("clickButton", (button) => {
 Cypress.Commands.add("waitForURL", (urlPart, timeout = 5000) => {
   cy.url({ timeout }).should("include", urlPart);
 });
+
+Cypress.Commands.add("fillInput", (input, value) => {
+  cy.get(input).click().type(value);
+});
